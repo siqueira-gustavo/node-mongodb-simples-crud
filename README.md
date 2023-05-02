@@ -43,16 +43,16 @@ The user model has the following schema:
 }
 ```
 
-## Como contribuir para o projeto
+## How to contribute to the project
 
-Se você quiser contribuir para este projeto, seja corrigindo bugs, adicionando novas funcionalidades ou melhorando a documentação, você pode seguir os seguintes passos:
+If you want to contribute to this project, be it fixing bugs, adding new features or improving the documentation, you can follow these steps:
 
-1. Faça um fork deste repositório em <https://github.com/siqueira-gustavo/node-mongodb-simples-crud>
-1. Crie uma branch com o nome da sua funcionalidade ou correção (por exemplo, feature/nova-funcionalidade ou fix/bug-corrigido).
-1. Faça as alterações necessárias no código e nos testes.
-1. Faça um commit e push das suas alterações para a sua branch.
-1. Abra um pull request para a branch master do repositório original.
-1. Aguarde a revisão do seu pull request e responda aos comentários se necessário.
-1. Se o seu pull request for aceito, ele será mesclado na branch master do repositório original.
+1. Fork this repository at <https://github.com/siqueira-gustavo/node-mongodb-simples-crud>
+1. Create a branch with the name of your feature or fix (for example, feature/new-feature or fix/bug-fixed).
+1. Make the necessary changes to the code and tests.
+1. Commit and push your changes to your branch.
+1. Open a pull request to the original repository's master branch.
+1. Wait for your pull request to be reviewed and respond to comments if necessary.
+1. If your pull request is accepted, it will be merged into the original repository's master branch.
 
-Obrigado pela sua colaboração!
+Thanks for your collaboration!
