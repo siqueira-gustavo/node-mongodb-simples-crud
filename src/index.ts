@@ -9,6 +9,7 @@ import mongoose from 'mongoose'
 import router from './router'
 
 dotenv.config()
+const port = process.env.PORT
 const app = express()
 app.use(
   cors({
@@ -19,8 +20,8 @@ app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())
 const server = http.createServer(app)
-server.listen(8080, () => {
-  console.log('Server running on port http://localhost:8080')
+server.listen(port, () => {
+  console.log(`Server running on port http://localhost:${port}`)
 })
 
 const username = process.env.MONGO_USERNAME
