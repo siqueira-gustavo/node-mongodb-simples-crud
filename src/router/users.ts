@@ -1,4 +1,4 @@
-import express from 'express'
+import type express from 'express'
 import { deleteUser, getAllUsers, updateUser } from '../controllers/users'
 import { isAuthenticated, isOwner } from '../middlewares'
 

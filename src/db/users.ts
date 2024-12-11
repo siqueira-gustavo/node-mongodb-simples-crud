@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
 
 export const UserModel = mongoose.model('User', UserSchema)
 
-export const createUser = (values: Record<string, any>) =>
+export const createUser = (values: Record<string, unknown>) =>
   new UserModel(values).save().then((user) => user.toObject())
 
 export const getUsers = () => UserModel.find()
@@ -27,7 +27,7 @@ export const getUserBySessionToken = (sessionToken: string) =>
     'authentication.sessionToken': sessionToken,
   })
 
-export const updateUserById = (id: string, values: Record<string, any>) =>
+export const updateUserById = (id: string, values: Record<string, unknown>) =>
   UserModel.findByIdAndUpdate(id, values)
 
 export const deleteUserById = (id: string) =>

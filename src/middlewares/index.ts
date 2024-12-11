@@ -1,4 +1,4 @@
-import express from 'express'
+import type express from 'express'
 import { get, merge } from 'lodash'
 import { getUserBySessionToken } from '../db/users'
 

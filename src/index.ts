@@ -4,8 +4,8 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express from 'express'
-import http from 'http'
 import mongoose from 'mongoose'
+import http from 'node:http'
 import router from './router'
 
 dotenv.config()
@@ -30,6 +30,8 @@ const MONGO_URI = `mongodb+srv://${username}:${password}@cluster0.nshikgn.mongod
 
 mongoose.Promise = Promise
 mongoose.connect(MONGO_URI)
-mongoose.connection.on('error', (error: Error) => console.log(console.error()))
-
+mongoose.connection.on('error', (error: Error) => {
+  return console.log('🚀 ~ error:', error)
+  // return console.log(console.error())
+})
 app.use('/', router())

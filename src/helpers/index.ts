@@ -1,5 +1,5 @@
-import crypto from 'crypto'
 import * as dotenv from 'dotenv'
+import crypto from 'node:crypto'
 
 dotenv.config()
 const SECRET = process.env.HELPER_SECRET
