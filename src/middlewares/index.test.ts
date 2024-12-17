@@ -1,10 +1,14 @@
+import { describe, expect, it } from '@jest/globals'
 import type express from 'express'
-import assert from 'node:assert/strict'
-import { describe, it } from 'node:test'
-import { isOwner } from './index'
+import lodash from 'lodash'
+import { isAuthenticated, isOwner } from './index'
 
 /** Mocking express-like objects */
-function createMockRequest(id: string, userId: string) {
+function createMockRequest(
+  id: string,
+  userId: string,
+  body?: { sessionToken?: string }
+) {
   return {
     params: { id },
     identity: { _id: userId },
@@ -20,20 +24,22 @@ interface MockResponse extends express.Response {
 }
 
 function createMockResponse() {
-  return {
+  const mockResponse = {
+    statusSent: false,
+    statusCode: 0,
     status: (statusCode: number) => {
-      this.statusSent = statusCode
-      return this
+      mockResponse.statusSent = true
+      mockResponse.statusCode = statusCode
+      return mockResponse
     },
-    send: (_body: unknown) => {
-      // implementation
-    },
-    json: (_body: unknown) => {
-      // implementation
+    sendStatus: (statusCode: number) => {
+      mockResponse.statusSent = true
+      mockResponse.statusCode = statusCode
+      return mockResponse
     },
     // add other required properties and methods...
-    statusSent: false,
   } as unknown as MockResponse
+  return mockResponse
 }
 
 describe('isOwner', () => {
@@ -48,12 +54,8 @@ describe('isOwner', () => {
 
     await isOwner(req, res, next)
 
-    assert.equal(nextCalled, true, 'next() was not called')
-    assert.equal(
-      res.statusSent,
-      false,
-      'sendStatus() should not have been called'
-    )
+    expect(nextCalled).toBe(true)
+    expect(res.statusSent).toBe(false)
   })
 
   it('should call sendStatus(403) when currentUserId does not match params.id', async () => {
@@ -67,7 +69,59 @@ describe('isOwner', () => {
 
     await isOwner(req, res, next)
 
-    assert.equal(nextCalled, false, 'next() should not have been called')
-    assert.equal(res.statusSent, true, 'sendStatus() was not called')
+    expect(nextCalled).toBe(false)
+    expect(res.statusCode).toBe(403)
+  })
+
+  it('should return 400 status code if an error occurs', async () => {
+    const req = createMockRequest('123', '456')
+    const res = createMockResponse()
+    const next = () => {
+      // do nothing
+    }
+
+    // Mock the get function to throw an error
+    jest.spyOn(lodash, 'get').mockImplementationOnce(() => {
+      throw new Error('Mock error')
+    })
+
+    await isOwner(req, res, next)
+
+    expect(res.statusSent).toBe(true)
+    expect(res.statusCode).toBe(400)
+  })
+})
+
+describe('isAuthenticated', () => {
+  it.skip('should call next() when sessionToken is present', async () => {
+    const req = createMockRequest('123', '456', {
+      sessionToken: 'some-token-value',
+    })
+    const res = createMockResponse()
+    let nextCalled = false
+
+    const next = () => {
+      nextCalled = true
+    }
+
+    await isAuthenticated(req, res, next)
+
+    expect(nextCalled).toBe(true)
+    expect(res.statusSent).toBe(false)
+  })
+
+  it.skip('should call sendStatus(403) when sessionToken is not present', async () => {
+    const req = createMockRequest('123', '456')
+    const res = createMockResponse()
+    let nextCalled = false
+
+    const next = () => {
+      nextCalled = false
+    }
+
+    await isAuthenticated(req, res, next)
+
+    expect(nextCalled).toBe(false)
+    expect(res.statusCode).toBe(403)
   })
 })

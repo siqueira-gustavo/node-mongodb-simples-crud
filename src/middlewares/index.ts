@@ -9,7 +9,7 @@ export const isOwner = async (
 ) => {
   try {
     const { id } = req.params
-    const currentUserId = get(req, 'identity._id') as string
+    const currentUserId = get(req, 'identity._id') as string | undefined
 
     if (!currentUserId) return res.sendStatus(403)
     if (currentUserId.toString() !== id) return res.sendStatus(403)

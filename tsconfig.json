@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
     "baseUrl": "src",
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noImplicitAny": true,
     "outDir": "dist",
     "sourceMap": true,
-    "noImplicitAny": true
+    "strict": true,
+    "target": "ES2017"
   },
   "include": ["src/**/*"]
 }

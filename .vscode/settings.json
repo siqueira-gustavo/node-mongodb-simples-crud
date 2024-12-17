@@ -1,0 +1,7 @@
+{
+  "cSpell.language": "pt-BR, en, lorem",
+  "cSpell.words": [],
+  "css.customData": ["./.vscode/css-data.json"],
+  "jest.jestCommandLine": "bun jest",
+  "jest.runMode": "on-demand"
+}
